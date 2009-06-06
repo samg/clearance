@@ -17,6 +17,9 @@ class ClearanceGenerator < Rails::Generator::Base
         m.file "user.rb", user_model
       end
 
+      m.directory File.join("config")
+      m.file "clearance.yml", 'config/clearance.yml'
+
       m.directory File.join("test", "factories")
       m.file "factories.rb", "test/factories/clearance.rb"
 

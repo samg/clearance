@@ -3,19 +3,19 @@
 
 Ok, enough fancy automatic stuff. Time for some old school monkey copy-pasting.
 
-1. Define a HOST constant in your environments files.
-In config/environments/test.rb and config/environments/development.rb it can be:
+1. A a clearance.yml config file has been created in your config/ directory.
 
-    HOST = "localhost"
+Use it to configure the host name and sender of clearance generated emails.
+In production it must be the actual host your application is deployed to.
+The config is used by mailers to generate URLs in emails.
 
-In production.rb it must be the actual host your application is deployed to.
-The constant is used by mailers to generate URLs in emails.
+It can look like this:
 
-2. In config/environment.rb:
+production:
+  host: you_production_host.com
+  do_not_reply: do_not_reply@you_production_host.com
 
-    DO_NOT_REPLY = "donotreply@example.com"
-
-3. Define root_url to *something* in your config/routes.rb:
+2. Define root_url to *something* in your config/routes.rb:
 
     map.root :controller => 'home'
 

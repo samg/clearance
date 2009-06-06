@@ -1,9 +1,21 @@
 class ClearanceMailer < ActionMailer::Base
 
-  default_url_options[:host] = HOST
+  def self.config_file
+    File.join(RAILS_ROOT, 'config', 'clearance.yml')
+  end
+
+  def self.config
+    YAML.load(File.read(config_file)).with_indifferent_access[RAILS_ENV]
+  end
+
+  def config
+    self.class.config
+  end
+
+  default_url_options[:host] = config[:host]
 
   def change_password(user)
-    from       DO_NOT_REPLY
+    from       config[:do_not_reply]
     recipients user.email
     subject    I18n.t(:change_password,
                       :scope   => [:clearance, :models, :clearance_mailer],
@@ -12,7 +24,7 @@ class ClearanceMailer < ActionMailer::Base
   end
 
   def confirmation(user)
-    from       DO_NOT_REPLY
+    from       config[:do_not_reply]
     recipients user.email
     subject    I18n.t(:confirmation,
                       :scope   => [:clearance, :models, :clearance_mailer],

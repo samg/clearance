@@ -9,7 +9,7 @@ class ClearanceMailerTest < ActiveSupport::TestCase
     end
 
     should "be from DO_NOT_REPLY" do
-      assert_match /#{@email.from[0]}/i, DO_NOT_REPLY
+      assert_match /#{@email.from[0]}/i, 'do_not_reply@test.host'
     end
 
     should "be sent to user" do
@@ -34,7 +34,7 @@ class ClearanceMailerTest < ActiveSupport::TestCase
     end
 
     should "be from DO_NOT_REPLY" do
-      assert_match /#{@email.from[0]}/i, DO_NOT_REPLY
+      assert_match /#{@email.from[0]}/i, 'do_not_reply@test.host'
     end
 
     should "be sent to user" do
