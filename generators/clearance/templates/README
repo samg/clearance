@@ -12,8 +12,8 @@ The config is used by mailers to generate URLs in emails.
 It can look like this:
 
 production:
-  host: you_production_host.com
-  do_not_reply: do_not_reply@you_production_host.com
+  host: your_production_host.com
+  do_not_reply: do_not_reply@your_production_host.com
 
 2. Define root_url to *something* in your config/routes.rb:
 

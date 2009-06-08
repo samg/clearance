@@ -10,5 +10,5 @@ test:
   host: test.host
   do_not_reply: do_not_reply@test.host
 # production:
-#   host: you_production_host.com
-#   do_not_reply: do_not_reply@you_production_host.com
+#   host: your_production_host.com
+#   do_not_reply: do_not_reply@your_production_host.com
