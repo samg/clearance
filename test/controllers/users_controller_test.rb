@@ -11,6 +11,21 @@ class UsersControllerTest < ActionController::TestCase
 
     context "on GET to #new" do
       setup { get :new }
+      should_deny_access
+    end
+
+    context "on POST to #create with valid attributes" do
+      setup do
+        user_attributes = Factory.attributes_for(:user)
+        post :create, :user => user_attributes
+      end
+      should_deny_access
+    end
+  end
+
+  signed_in_user_context do
+    context "GET to new" do
+      setup { get :new }
 
       should_respond_with :success
       should_render_template :new
@@ -19,37 +34,14 @@ class UsersControllerTest < ActionController::TestCase
       should_display_a_sign_up_form
     end
 
-    context "on GET to #new with email" do
-      setup do
-        @email = "a@example.com"
-        get :new, :user => { :email => @email }
-      end
-
-      should "set assigned user's email" do
-        assert_equal @email, assigns(:user).email
-      end
-    end
-
-    context "on POST to #create with valid attributes" do
+    context "POST to create" do
       setup do
         user_attributes = Factory.attributes_for(:user)
         post :create, :user => user_attributes
       end
-
       should_create_user_successfully
+      should_set_the_flash_to /account was created/
+      should_redirect_to('new_user_url') { new_user_url }
     end
   end
-
-  signed_in_user_context do
-    context "GET to new" do
-      setup { get :new }
-      should_redirect_to("the home page") { root_url }
-    end
-
-    context "POST to create" do
-      setup { post :create, :user => {} }
-      should_redirect_to("the home page") { root_url }
-    end
-  end
-
 end

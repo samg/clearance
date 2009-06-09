@@ -14,6 +14,6 @@ en:
         bad_email_or_password: Bad email or password.
         unconfirmed_email: User has not confirmed email. Confirmation email will be resent.
       users:
-        deliver_confirmation: You will receive an email within the next few minutes. It contains instructions for confirming your account.
+        deliver_confirmation: User account was created. They will receive an email within the next few minutes.  It contains instructions for confirming their account."
   signed_in: Signed in.
   signed_out: Signed out.

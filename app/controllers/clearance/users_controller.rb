@@ -1,7 +1,8 @@
 class Clearance::UsersController < ApplicationController
   unloadable
 
-  before_filter :redirect_to_root, :only => [:new, :create], :if => :signed_in?
+  before_filter :authenticate
+  #before_filter :redirect_to_root, :only => [:new, :create], :if => :signed_in?
   filter_parameter_logging :password
 
   def new
@@ -25,11 +26,12 @@ class Clearance::UsersController < ApplicationController
   def flash_notice_after_create
     flash[:notice] = translate(:deliver_confirmation,
       :scope   => [:clearance, :controllers, :users],
-      :default => "You will receive an email within the next few minutes. " <<
-                  "It contains instructions for confirming your account.")
+      :default => "User account was created. " <<
+                  "They will receive an email within the next few minutes. " <<
+                  "It contains instructions for confirming their account.")
   end
 
   def url_after_create
-    new_session_url
+    new_user_url
   end
 end
