@@ -24,6 +24,19 @@ Given /^I am signed up and confirmed as "(.*)\/(.*)"$/ do |email, password|
     :password_confirmation => password
 end
 
+Given /^I was signed up as "(.*)"$/ do |email|
+  user = Factory :user,
+    :email => email
+end
+
+Given /^I am signed in as "(.*)"$/ do |email|
+  Given %{I am signed up and confirmed as "#{email}/password"}
+  When %{I go to the sign in page}
+  And %{I fill in "Email" with "#{email}"}
+  And %{I fill in "Password" with "password"}
+  And %{I press "Sign In"}
+end
+
 # Session
 
 Then /^I should be signed in$/ do

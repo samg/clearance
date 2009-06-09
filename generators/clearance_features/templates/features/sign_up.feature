@@ -1,28 +1,30 @@
 Feature: Sign up
-  In order to get access to protected sections of the site
-  A user
-  Should be able to sign up
+  In order to give someone access to the site
+  A logged in user
+  Should be able to sign up another user
+
+    Scenario: User is not logged in
+      When I go to the sign up page
+      Then I should see "Sign in"
 
     Scenario: User signs up with invalid data
+      Given I am signed in as "admin@person.com"
       When I go to the sign up page
       And I fill in "Email" with "invalidemail"
-      And I fill in "Password" with "password"
-      And I fill in "Confirm password" with ""
       And I press "Sign Up"
       Then I should see error messages
 
     Scenario: User signs up with valid data
+      Given I am signed in as "admin@person.com"
       When I go to the sign up page
       And I fill in "Email" with "email@person.com"
-      And I fill in "Password" with "password"
-      And I fill in "Confirm password" with "password"
       And I press "Sign Up"
       Then I should see "instructions for confirming"
       And a confirmation message should be sent to "email@person.com"
 
-    Scenario: User confirms his account
-      Given I signed up with "email@person.com/password"
-      When I follow the confirmation link sent to "email@person.com"
-      Then I should see "Confirmed email and signed in"
+    Scenario: User confirms his account and sets password
+      Given I was signed up as "email@person.com"
+      When I follow the password reset link sent to "email@person.com"
+      And I update my password with "newpassword/newpassword"
       And I should be signed in
 
