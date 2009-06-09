@@ -11,9 +11,5 @@ ActionController::Routing::Routes.draw do |map|
     users.resource :password,
       :controller => 'clearance/passwords',
       :only => [:create, :edit, :update]
-
-    users.resource :confirmation,
-      :controller => 'clearance/confirmations',
-      :only => [:new, :create]
   end
 end

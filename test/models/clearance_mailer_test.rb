@@ -45,9 +45,9 @@ class ClearanceMailerTest < ActiveSupport::TestCase
       assert_match /Account confirmation/, @email.subject
     end
 
-    should "contain a link to confirm the user's account" do
+    should "contain a link to set the user's password" do
       host = ActionMailer::Base.default_url_options[:host]
-      regexp = %r{http://#{host}/users/#{@user.id}/confirmation/new\?token=#{@user.token}}
+      regexp = %r{http://#{host}/users/#{@user.id}/password/edit\?token=#{@user.token}}
       assert_match regexp, @email.body
     end
   end

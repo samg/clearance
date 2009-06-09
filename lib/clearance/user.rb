@@ -52,6 +52,7 @@ module Clearance
 
     module InstanceMethods
       def authenticated?(password)
+        return if encrypted_password.blank?
         encrypted_password == encrypt(password)
       end
 
