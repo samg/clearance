@@ -11,14 +11,14 @@ Feature: Sign up
       Given I am signed in as "admin@person.com"
       When I go to the sign up page
       And I fill in "Email" with "invalidemail"
-      And I press "Sign Up"
+      And I press "Create User"
       Then I should see error messages
 
     Scenario: User signs up with valid data
       Given I am signed in as "admin@person.com"
       When I go to the sign up page
       And I fill in "Email" with "email@person.com"
-      And I press "Sign Up"
+      And I press "Create User"
       Then I should see "instructions for confirming"
       And a confirmation message should be sent to "email@person.com"
 
