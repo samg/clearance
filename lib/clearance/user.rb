@@ -122,7 +122,7 @@ module Clearance
       end
 
       def password_required?
-        encrypted_password.blank? || !password.blank?
+        !password.blank?
       end
 
       def remember_me_until!(time)

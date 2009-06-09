@@ -188,10 +188,6 @@ module Clearance
         true, "There must be a form to sign up" do
           assert_select "input[type=text][name=?]",
             "user[email]", true, "There must be an email field"
-          assert_select "input[type=password][name=?]",
-            "user[password]", true, "There must be a password field"
-          assert_select "input[type=password][name=?]",
-            "user[password_confirmation]", true, "There must be a password confirmation field"
           assert_select "input[type=submit]", true,
             "There must be a submit button"
         end

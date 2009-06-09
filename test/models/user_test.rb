@@ -9,7 +9,7 @@ class UserTest < ActiveSupport::TestCase
   # signing up
 
   context "When signing up" do
-    should_validate_presence_of :email, :password
+    should_validate_presence_of :email
     should_allow_values_for     :email, "foo@example.com"
     should_not_allow_values_for :email, "foo"
     should_not_allow_values_for :email, "example.com"
