@@ -42,6 +42,7 @@ module Clearance
       end
 
       def sign_user_in(user)
+        warn "[DEPRECATION] sign_user_in: unnecessary. use sign_in(user) instead."
         sign_in(user)
       end
 
@@ -63,22 +64,25 @@ module Clearance
 
       def forget(user)
         user.forget_me! if user
-        cookies.delete :remember_token
+        cookies.delete(:remember_token)
         reset_session
       end
 
       def redirect_back_or(default)
-        session[:return_to] ||= params[:return_to]
-        if session[:return_to]
-          redirect_to(session[:return_to])
-        else
-          redirect_to(default)
-        end
+        redirect_to(return_to || default)
+        clear_return_to
+      end
+
+      def return_to
+        session[:return_to] || params[:return_to]
+      end
+
+      def clear_return_to
         session[:return_to] = nil
       end
 
       def redirect_to_root
-        redirect_to root_url
+        redirect_to(root_url)
       end
 
       def store_location
@@ -88,7 +92,7 @@ module Clearance
       def deny_access(flash_message = nil, opts = {})
         store_location
         flash[:failure] = flash_message if flash_message
-        redirect_to new_session_url
+        redirect_to(new_session_url)
       end
     end
 

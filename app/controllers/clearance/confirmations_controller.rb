@@ -1,9 +1,9 @@
 class Clearance::ConfirmationsController < ApplicationController
   unloadable
 
-  before_filter :forbid_confirmed_user,    :only => :new
-  before_filter :forbid_missing_token,     :only => :new
-  before_filter :forbid_non_existent_user, :only => :new
+  before_filter :forbid_confirmed_user,    :only => [:new, :create]
+  before_filter :forbid_missing_token,     :only => [:new, :create]
+  before_filter :forbid_non_existent_user, :only => [:new, :create]
   filter_parameter_logging :token
 
   def new
@@ -14,11 +14,9 @@ class Clearance::ConfirmationsController < ApplicationController
     @user = ::User.find_by_id_and_token(params[:user_id], params[:token])
     @user.confirm_email!
 
-    sign_user_in(@user)
-    flash[:success] = translate(:confirmed_email,
-      :scope   => [:clearance, :controllers, :confirmations],
-      :default => "Confirmed email and signed in.")
-    redirect_to url_after_create
+    sign_in(@user)
+    flash_success_after_create
+    redirect_to(url_after_create)
   end
 
   private
@@ -40,6 +38,12 @@ class Clearance::ConfirmationsController < ApplicationController
     unless ::User.find_by_id_and_token(params[:user_id], params[:token])
       raise ActionController::Forbidden, "non-existent user"
     end
+  end
+
+  def flash_success_after_create
+    flash[:success] = translate(:confirmed_email,
+      :scope   => [:clearance, :controllers, :confirmations],
+      :default => "Confirmed email and signed in.")
   end
 
   def url_after_create
